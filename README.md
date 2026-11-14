@@ -1,122 +1,137 @@
-# Space Shooter (Project No. 59)
+# Space Shooter (Problem Statement No. 59)
 
-[![Python 3.12](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
-[![Pygame](https://img.shields.io/badge/Pygame-2.6.1-orange.svg)](https://www.pygame.org/)
-[![Build Status: Passed](https://img.shields.io/badge/Tests-4%2F4%20Passed-brightgreen.svg)]()
-[![Course: RU--100--01--0021](https://img.shields.io/badge/Course-RU--100--01--0021-purple.svg)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+## Academic Submission Details
 
-> **Course:** Programming Fundamentals and Logic Building Using Python (`RU-100-01-0021`)  
-> **Institution:** Rungta International Skills University, School of Computer Science and Engineering  
-> **Degree:** Bachelor of Technology (Computer Science & Engineering)  
-> **Academic Session:** 2026–2027  
-> **Class:** B.Tech / CSE / First Semester / Section – K  
-> **Date of Allocation:** 14th October 2026 | **Date of Submission:** 16th November 2026  
-
----
-
-## 📌 Problem Statement (PS No. 59)
-
-> **Build a space shooter game in which the player's spaceship moves left and right at the bottom of the screen and fires bullets upward to destroy enemy ships descending from the top. The player earns points for each hit and loses a life when an enemy reaches the bottom.**
->
-> **Language:** Python 3  
-> **Core Concepts:** Pygame, Object-Oriented Programming (Classes & Objects), Collision Detection (`Rect.colliderect`), Game Loop.  
-> **Specifications:** Window `600x600`. Ship is `50x50` at $y = 520$ and moves `8 px` per key press. Bullet is `5x10` and moves `10 px` per frame upward; maximum `5` bullets on screen. Enemy is `40x40`. Hit = `+10 score`; an enemy reaching $y = 600$ costs `1 life` (starts with `3 lives`). Positions given as $(x, y) = \text{top-left corner}$.
+| Field | Description |
+| :--- | :--- |
+| **Course Name** | Programming Fundamentals and Logic Building Using Python |
+| **Course Code** | RU-100-01-0021 |
+| **Institution** | Rungta International Skills University (RISU) |
+| **Department** | School of Computer Science and Engineering |
+| **Degree** | Bachelor of Technology (Computer Science & Engineering) |
+| **Academic Session** | 2026–2027 |
+| **Semester & Section** | First Semester / Section K |
+| **Student Name** | Anushka Keshri |
+| **University Roll Number** | RU-26-01601 |
+| **Problem Statement Number** | PS No. 59 |
+| **Date of Allocation** | 14th October 2026 |
+| **Date of Submission** | 16th November 2026 |
 
 ---
 
-## 🚀 Key Production Features
+## 1. Problem Statement Definition
 
-1. **Object-Oriented Design (BMR #2):**
-   - Independent, decoupled classes for `Ship`, `Bullet`, and `Enemy`, each encapsulating position $(x, y)$, dimensions $(w, h)$, movement vectors, and rendering logic.
-2. **Deterministic Player Navigation (BMR #3):**
-   - Responsive horizontal navigation using the `LEFT` and `RIGHT` arrow keys at exactly $8\text{ px}$ per press.
-   - Strict window clamping preventing the ship from exiting the screen ($x \in [0, 550]$).
-3. **Throttled Ammunition System (BMR #3):**
-   - Bullets fire from the precise center-top of the ship: $(x + 25, 520)$.
-   - Active on-screen bullet cap strictly enforced at $N \le 5$. Extraneous space presses when 5 bullets are active are gracefully discarded.
-4. **Collision Detection via Axis-Aligned Bounding Boxes (BMR #4):**
-   - Bullet-enemy impacts are detected using `pygame.Rect.colliderect()`.
-   - On collision, both interacting entities are atomically destroyed, and $+10$ points are credited to the player's score.
-5. **Life Depletion & Game Over Protocol (BMR #5):**
-   - The player starts with $3$ lives.
-   - Any enemy crossing the lower threshold ($y \ge 600$) without being intercepted decrements the player's life count by $1$.
-   - When lives reach $0$, the game transitions to a modal **GAME OVER** screen displaying the final score, offering instant session restart via `[R]` or exit via `[ESC]`.
+Build a 2D arcade space shooter game in Python 3 using Pygame in which the player's spaceship moves left and right at the bottom of the screen and fires bullets upward to destroy enemy ships descending from the top. The player earns points for each hit and loses a life when an enemy reaches the bottom of the window.
+
+### Technical Specifications
+- **Window Dimensions:** 600 px (width) by 600 px (height).
+- **Player Spaceship:** 50 px wide by 50 px high, locked at vertical coordinate $y = 520$, starts horizontally at $x = 275$. Moves horizontally by 8 px per keystroke. Clamped within window boundaries ($0 \le x \le 550$).
+- **Bullet:** 5 px wide by 10 px high. Emerges from the horizontal center-top of the ship ($x = \text{ship}.x + 25$, $y = 520$). Moves upward at 10 px per frame. A maximum of 5 bullets can exist simultaneously on screen.
+- **Enemy Craft:** 40 px wide by 40 px high. Descends from the top ($y = 0$) at 2 px per frame.
+- **Scoring System:** Each successful bullet-enemy hit awards $+10$ points and removes both the colliding bullet and enemy.
+- **Life Tracking:** The player begins with 3 lives. If an enemy reaches or crosses the bottom edge ($y \ge 600$), the player loses 1 life. When lives reach 0, the game enters a Game Over state displaying the final score and options to restart or exit.
 
 ---
 
-## 🕹️ Controls & HUD Layout
+## 2. Bare Minimum Requirements (BMR) Compliance
 
-| Action | Control Key | Description |
-| :--- | :--- | :--- |
-| **Move Left** | `LEFT Arrow` / `A` | Translates spaceship left by $8\text{ px}$ (min boundary: $x = 0$) |
-| **Move Right** | `RIGHT Arrow` / `D` | Translates spaceship right by $8\text{ px}$ (max boundary: $x = 550$) |
-| **Fire Laser** | `SPACEBAR` | Discharges upward bullet (max 5 simultaneous bullets) |
-| **Restart Game** | `R` | Resets score, lives, entities, and restarts fresh game loop |
-| **Quit Game** | `ESCAPE` / Window Close | Cleanly closes Pygame window and terminates process |
+| # | Bare Minimum Requirement | Implementation in `main.py` | Status |
+| :-: | :--- | :--- | :-: |
+| 1 | Write the solution in Python 3 (one `.py` file) using Pygame and run it from the console | Single self-contained script `main.py` (also callable as `One.py`) executed directly via `python main.py` or `python One.py`. | Satisfied |
+| 2 | Create Ship, Bullet and Enemy as classes (objects) with position, size and speed | Structured OOP architecture implementing `Ship`, `Bullet`, and `Enemy` classes with explicit $(x, y)$, dimensions $(w, h)$, velocities, and bounding boxes. | Satisfied |
+| 3 | Move the ship with LEFT/RIGHT arrows, fire bullets with SPACE and limit the bullets on screen to 5 | `Ship.move()` handles arrow key input with $[0, 550]$ screen clamping. `SpaceShooter.fire_bullet()` strictly rejects fire requests when active bullets equal 5. | Satisfied |
+| 4 | Detect bullet-enemy collisions using `Rect.colliderect()`; add 10 to the score for every enemy destroyed | `SpaceShooter.check_collisions()` queries `bullet.rect.colliderect(enemy.rect)`, destroys both entities on impact, and adds $+10$ points to score. | Satisfied |
+| 5 | Reduce a life when an enemy reaches the bottom; show 'Game Over' with the final score when lives reach 0 | `update_enemies()` removes enemies at $y \ge 600$, decrements lives, and transitions to modal Game Over overlay with final score and restart key `[R]`. | Satisfied |
 
 ---
 
-## 📐 Mathematical & Physics Formulations
+## 3. Mathematical & Algorithmic Formulations
 
-### 1. Spaceship Clamping Inequality
-The spaceship coordinate $(x_{\text{ship}}, y_{\text{ship}})$ with width $W_s = 50$ is constrained within a window of width $W = 600$:
-$$0 \le x_{\text{ship}} \le (W - W_s) \implies 0 \le x_{\text{ship}} \le 550$$
-Upon each directional movement command $\Delta \in \{-1, +1\}$:
-$$x_{\text{new}} = \max\Big(0, \min\big(x_{\text{current}} + \Delta \cdot V_{\text{ship}},\, 550\big)\Big)$$
-Where $V_{\text{ship}} = 8\text{ px}$.
+### 3.1 Spaceship Boundary Clamping
+The spaceship width $W_s = 50\text{ px}$ must never cross the screen bounds $W = 600\text{ px}$. For any horizontal shift $\Delta x \in \{-8, +8\}$:
+$$x_{t+1} = \max\Big(0,\, \min\big(x_t + \Delta x,\, 600 - W_s\big)\Big) = \max\Big(0,\, \min\big(x_t + \Delta x,\, 550\big)\Big)$$
 
-### 2. Bullet Origin Coordinate Formula
-Bullets must emerge precisely from the center of the ship's leading edge:
-$$x_{\text{bullet}} = x_{\text{ship}} + \frac{W_s}{2} = 275 + 25 = 300$$
-$$y_{\text{bullet}} = y_{\text{ship}} = 520$$
-With top-left bounding rectangle:
-$$\text{Rect}_{\text{bullet}} = \left(x_{\text{bullet}} - \frac{W_b}{2},\, y_{\text{bullet}},\, W_b,\, H_b\right) = (300 - 2,\, 520,\, 5,\, 10)$$
+### 3.2 Centered Bullet Emission
+Bullets fire from the top-center vertex of the spaceship. Given ship coordinate $(x_s, y_s)$ and width $W_s = 50$:
+$$x_{\text{bullet\_center}} = x_s + \frac{W_s}{2} = x_s + 25$$
+$$y_{\text{bullet\_top}} = y_s = 520$$
+With bullet dimensions $W_b = 5$, $H_b = 10$, the top-left bounding box rectangle is:
+$$\text{Rect}_b = \left(x_s + 25 - \left\lfloor\frac{W_b}{2}\right\rfloor,\, 520,\, 5,\, 10\right) = (x_s + 23,\, 520,\, 5,\, 10)$$
 
-### 3. Collision Condition (AABB Intersection)
-Two rectangular bounding boxes $R_1(x_1, y_1, w_1, h_1)$ and $R_2(x_2, y_2, w_2, h_2)$ collide if and only if all four 1D projections overlap:
+### 3.3 Axis-Aligned Bounding Box (AABB) Collision Condition
+Let bullet bounding box $R_1 = (x_1, y_1, w_1, h_1)$ and enemy bounding box $R_2 = (x_2, y_2, w_2, h_2)$. Collision exists if and only if their 1D projection intervals overlap on both Cartesian axes:
 $$\text{colliderect}(R_1, R_2) \iff (x_1 < x_2 + w_2) \land (x_1 + w_1 > x_2) \land (y_1 < y_2 + h_2) \land (y_1 + h_1 > y_2)$$
 
 ---
 
-## 📊 Acceptance Test Cases Verification Table
+## 4. Acceptance Test Cases Verification Record
 
-| Test Case | Scenario / Input | Expected Output | Actual Output | Status |
-| :--- | :--- | :--- | :--- | :---: |
-| **Test Case 1** | **Normal Input:**<br>Ship $x = 275$, 0 bullets on screen<br>Key: `SPACE` | Bullet fired at $(300, 520)$<br>Bullets on screen: $1$ | `Bullet fired at (300, 520) \| Bullets on screen: 1` | ✅ **PASS** |
-| **Test Case 2 (a)** | **Boundary Min (Left Edge):**<br>Ship $x = 0$, Key: `LEFT` | Ship $x = 0$<br>(no movement, stays inside window) | `Ship x = 0 (no movement, stays inside window)` | ✅ **PASS** |
-| **Test Case 2 (b)** | **Boundary Max (Right Edge):**<br>Ship $x = 550$, Key: `RIGHT` | Ship $x = 550$<br>(no movement, stays inside window) | `Ship x = 550 (no movement, stays inside window)` | ✅ **PASS** |
-| **Test Case 3** | **Invalid Input (Limit Exceeded):**<br>5 bullets already on screen<br>Key: `SPACE` | Maximum 5 bullets on screen.<br>No bullet fired.<br>Bullets on screen: $5$ | `Maximum 5 bullets on screen. No bullet fired.`<br>`Bullets on screen: 5` | ✅ **PASS** |
-| **Test Case 4 (a)** | **Game Event (Collision):**<br>Bullet at $(300, 100)$, Enemy at $(280, 90)$ | Enemy destroyed<br>Score: $10$ \| Lives: $3$ | `Enemy destroyed \| Score: 10 \| Lives: 3` | ✅ **PASS** |
-| **Test Case 4 (b)** | **Game Event (Escaped Enemy):**<br>Enemy reaches $y = 600$, Lives before: $3$ | Enemy escaped<br>Lives: $2$ | `Enemy escaped \| Lives: 2` | ✅ **PASS** |
+| Test Case | Scenario / Preconditions | Input Trigger | Expected Output | Observed Output | Result |
+| :--- | :--- | :--- | :--- | :--- | :---: |
+| **Test Case 1** | Normal Input: Ship at $x = 275$, 0 bullets on screen | Press `SPACE` | Bullet fired at $(300, 520)$<br>Bullets on screen: 1 | `Bullet fired at (300, 520) \| Bullets on screen: 1` | PASS |
+| **Test Case 2 (a)** | Boundary Min: Ship at $x = 0$ (left window edge) | Press `LEFT` arrow | Ship $x = 0$ (no movement, stays inside window) | `Ship x = 0 (no movement, stays inside window)` | PASS |
+| **Test Case 2 (b)** | Boundary Max: Ship at $x = 550$ (right window edge) | Press `RIGHT` arrow | Ship $x = 550$ (no movement, stays inside window) | `Ship x = 550 (no movement, stays inside window)` | PASS |
+| **Test Case 3** | Invalid Input: 5 bullets already active on screen | Press `SPACE` | Maximum 5 bullets on screen. No bullet fired.<br>Bullets on screen: 5 | `Maximum 5 bullets on screen. No bullet fired.`<br>`Bullets on screen: 5` | PASS |
+| **Test Case 4 (a)** | Collision Event: Bullet at $(300, 100)$, Enemy at $(280, 90)$ | Frame update | Enemy destroyed<br>Score: 10 \| Lives: 3 | `Enemy destroyed \| Score: 10 \| Lives: 3` | PASS |
+| **Test Case 4 (b)** | Escaped Enemy: Enemy reaches $y = 600$, starting lives: 3 | Frame update | Enemy escaped<br>Lives: 2 | `Enemy escaped \| Lives: 2` | PASS |
 
 ---
 
-## 💻 How to Run the Project
+## 5. Controls & User Interface Layout
 
-Launch the 60 FPS graphical interactive game:
+| Command | Key Binding | Action Description |
+| :--- | :--- | :--- |
+| **Navigate Left** | `LEFT Arrow` or `A` | Translates the spaceship left by 8 px (bounded at $x = 0$) |
+| **Navigate Right** | `RIGHT Arrow` or `D` | Translates the spaceship right by 8 px (bounded at $x = 550$) |
+| **Discharge Laser** | `SPACEBAR` | Spawns an upward bullet if current active bullets $< 5$ |
+| **Restart Session** | `R` | Resets game state, score, lives, and entities after Game Over |
+| **Exit Application** | `ESCAPE` or Close Window | Terminates the Pygame process and closes window |
+
+---
+
+## 6. How to Run the Project
+
+### Prerequisites
+- Python 3.10, 3.11, or 3.12 installed.
+- Pygame library installed (`pip install pygame`).
+
+### Running the Game
+To launch the interactive 60 FPS graphical game:
 ```powershell
 python main.py
 ```
+*(Alternatively: `python One.py`)*
 
 ---
 
-## 🎯 Viva Voce Technical Preparation
+## 7. Visual Verification & Gameplay Evidence
 
-### Q1: What is the purpose of the Game Loop and `clock.tick(60)`?
-**Answer:** The game loop continuously handles user events, updates physics/positions, and renders graphical frames. `clock.tick(60)` caps the game loop execution at 60 frames per second (FPS), ensuring consistent game speed and physics across machines with differing CPU architectures.
+### 7.1 Application Launch & Game Setup
+Execution of the game launching the 60 FPS Pygame window:
 
-### Q2: Why is `Rect.colliderect()` preferred over manual pixel checking?
-**Answer:** `Rect.colliderect()` performs Axis-Aligned Bounding Box (AABB) collision testing using high-speed C-level boundary comparisons in $O(1)$ time complexity, minimizing CPU overhead compared to costly per-pixel alpha mask checks.
+![Application Execution](execution.png)
 
-### Q3: Why do we iterate over a shallow slice `self.bullets[:]` when removing items?
-**Answer:** In Python, removing elements from a list while iterating over it causes the iterator indices to shift, resulting in skipped elements. Iterating over a shallow copy (`bullets[:]`) guarantees safe, deterministic removal of off-screen or collided entities.
+### 7.2 Active Gameplay & HUD
+Real-time gameplay showing player spaceship, descending enemies, laser emission, and HUD (Score, Lives, Bullet capacity):
 
-### Q4: How is the maximum bullet constraint of 5 enforced?
-**Answer:** Inside `fire_bullet()`, the length of the active bullet list (`len(self.bullets)`) is checked against `MAX_BULLETS = 5`. If equal to 5, the method returns `None` and skips spawning, preventing infinite bullet spamming.
+![Space Shooter Gameplay](gameplay.png)
+
+### 7.3 Bullet-Enemy Collision Detection
+Visual proof of bullet impact destroying enemy targets and incrementing score:
+
+![Collision Detection](collision.png)
+
+### 7.4 Scoring & Life Deduction System
+Real-time score accumulation and life decrement when an enemy evades interception:
+
+![Score and Lives HUD](score_lives.png)
+
+### 7.5 Modal Game Over Screen
+Final score presentation upon depletion of all 3 player lives with restart option:
+
+![Game Over Screen](game_over.png)
 
 ---
 
-## 📄 License
-This project is developed for academic evaluation under the Computer Science & Engineering curriculum at Rungta International Skills University.
-Licensed under the [MIT License](LICENSE).
+## 8. Academic Integrity & Verification
+This project is an authentic, independent implementation of Problem Statement No. 59 developed for university academic evaluation under course code RU-100-01-0021.
